@@ -95,4 +95,17 @@ export class TransactionService {
 
     return await this.transactionRepository.delete(id);
   }
+
+  async findAllByType(id: number, type: string) {
+    const transactins = await this.transactionRepository.find({
+      where: {
+        user: { id },
+        type,
+      },
+    });
+
+    const total = transactins.reduce((acc, obj) => acc + obj.amount, 0);
+
+    return total;
+  }
 }
